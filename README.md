@@ -16,3 +16,12 @@ On each you have access to page number, a whole sentence including the cite, and
 And finally the reporting plot helps to have the report of citation-type labels.
 
 ![page3](https://user-images.githubusercontent.com/84702784/203112777-8c1df0ae-9e75-4ac5-be2d-ef3a9feb3bb0.png)
+
+----------------------------------------------------------------------------------------------------------------
+PDF_Show.py is the main python file. The following command will let you strat the web page with streamlit package.
+
+streamlit run PDF_Show.py
+
+There are some switches for this command. you may find them there.
+https://streamlit.io/
+
