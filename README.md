@@ -13,6 +13,6 @@ On each you have access to page number, a whole sentence including the cite, and
 ![page2](https://user-images.githubusercontent.com/84702784/203112747-2526b231-2c3f-40bb-9984-cef19e294dc4.png)
 
 ----------------------------------------------------------------------------------------------------------------
-And finally the reporting plot helps to have report of citation-type labels.
+And finally the reporting plot helps to have the report of citation-type labels.
 
 ![page3](https://user-images.githubusercontent.com/84702784/203112777-8c1df0ae-9e75-4ac5-be2d-ef3a9feb3bb0.png)
