@@ -125,7 +125,7 @@ if diagrammmm:
     matplotlib.use("agg")
     _lock = RendererAgg.lock
 
-    st.header("Count of user determination for citation types!")
+    st.header("Frequency diagram for citation types!")
 
     row0_spacer1, row0_1, row0_spacer2, row0_2, row0_spacer3 = st.columns((0.2, 1, .2, 1, .2))
 
