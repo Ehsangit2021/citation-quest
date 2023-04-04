@@ -1,10 +1,10 @@
 import streamlit as st
 import base64
 from convertor import recites_extraction
-import streamlit.components.v1 as components
-import pandas as pd
-import numpy as np
-from streamlit.components.v1 import html
+# import streamlit.components.v1 as components
+# import pandas as pd
+# import numpy as np
+# from streamlit.components.v1 import html
 
 
 
@@ -118,8 +118,8 @@ if not "initialized" in st.session_state:
 if diagrammmm:
     import matplotlib
     import matplotlib.pyplot as plt
-    import seaborn as sns
-    import os
+    # import seaborn as sns
+    # import os
     from matplotlib.backends.backend_agg import RendererAgg
 
     matplotlib.use("agg")
