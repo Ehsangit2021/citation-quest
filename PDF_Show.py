@@ -1,6 +1,8 @@
 import streamlit as st
+from PIL import Image
 import base64
 from convertor import recites_extraction
+import os
 # import streamlit.components.v1 as components
 # import pandas as pd
 # import numpy as np
@@ -8,7 +10,13 @@ from convertor import recites_extraction
 
 
 
-st.set_page_config(layout="wide")
+im = Image.open("./favicon.ico")
+st.set_page_config(
+    page_title="Scientific Citation Quest",
+    page_icon=im,
+    layout="wide"
+)
+
 
 
 if 'page_num' not in st.session_state:
@@ -67,6 +75,8 @@ pdf_file = st.file_uploader("Select your PDF file", type=["pdf"], on_change=clea
 
 
 if pdf_file is not None:
+    if not os.path.exists('./Uploaded_Resumes'):
+        os.mkdir('./Uploaded_Resumes')
     save_image_path = './Uploaded_Resumes/'+pdf_file.name
     with open(save_image_path, "wb") as f:
         f.write(pdf_file.getbuffer())
