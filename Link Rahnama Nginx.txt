@@ -1,3 +1,134 @@
 https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
 
 https://medium.com/featurepreneur/streamlit-with-nginx-bde7a9a41e6c
+
+
+
+
+sudo apt update
+sudo apt install nginx
+
+
+sudo ufw app list
+Output
+Available applications:
+  Nginx Full
+  Nginx HTTP
+  Nginx HTTPS
+  OpenSSH
+
+
+sudo ufw allow 'Nginx HTTP'
+sudo ufw status
+Output
+Status: active
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere                  
+Nginx HTTP                 ALLOW       Anywhere                  
+OpenSSH (v6)               ALLOW       Anywhere (v6)             
+Nginx HTTP (v6)            ALLOW       Anywhere (v6)
+
+
+
+systemctl status nginx
+Output
+● nginx.service - A high performance web server and a reverse proxy server
+   Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2020-04-20 16:08:19 UTC; 3 days ago
+     Docs: man:nginx(8)
+ Main PID: 2369 (nginx)
+    Tasks: 2 (limit: 1153)
+   Memory: 3.5M
+   CGroup: /system.slice/nginx.service
+           ├─2369 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+           └─2380 nginx: worker process
+
+
+
+curl -4 icanhazip.com
+http://your_server_ip
+
+
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl restart nginx
+sudo systemctl reload nginx
+sudo systemctl disable nginx
+sudo systemctl enable nginx
+
+
+
+sudo mkdir -p /var/www/your_domain/html
+
+sudo chown -R $USER:$USER /var/www/your_domain/html
+
+sudo chmod -R 755 /var/www/your_domain
+
+sudo nano /etc/nginx/sites-available/your_domain
+
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/your_domain/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name your_domain www.your_domain;
+
+        location / {
+            proxy_pass http://0.0.0.0:8502/;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_redirect off;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+        }    error_page 404 /404.html;
+        error_page 500 502 503 504 /50x.html;
+        
+        location = /50x.html {
+            root /usr/share/nginx/html;
+        }
+}
+
+
+sudo ln -s /etc/nginx/sites-available/your_domain /etc/nginx/sites-enabled/
+
+
+
+
+sudo nano /etc/nginx/nginx.conf
+...
+http {
+    ...
+    server_names_hash_bucket_size 64;
+    ...
+}
+...
+
+
+sudo nginx -t
+
+sudo systemctl restart nginx
+
+
+Step 6 – Getting Familiar with Important Nginx Files and Directories
+
+Now that you know how to manage the Nginx service itself, you should take a few minutes to familiarize yourself with a few important directories and files.
+Content
+
+    /var/www/html: The actual web content, which by default only consists of the default Nginx page you saw earlier, is served out of the /var/www/html directory. This can be changed by altering Nginx configuration files.
+
+Server Configuration
+
+    /etc/nginx: The Nginx configuration directory. All of the Nginx configuration files reside here.
+    /etc/nginx/nginx.conf: The main Nginx configuration file. This can be modified to make changes to the Nginx global configuration.
+    /etc/nginx/sites-available/: The directory where per-site server blocks can be stored. Nginx will not use the configuration files found in this directory unless they are linked to the sites-enabled directory. Typically, all server block configuration is done in this directory, and then enabled by linking to the other directory.
+    /etc/nginx/sites-enabled/: The directory where enabled per-site server blocks are stored. Typically, these are created by linking to configuration files found in the sites-available directory.
+    /etc/nginx/snippets: This directory contains configuration fragments that can be included elsewhere in the Nginx configuration. Potentially repeatable configuration segments are good candidates for refactoring into snippets.
+
+Server Logs
+
+    /var/log/nginx/access.log: Every request to your web server is recorded in this log file unless Nginx is configured to do otherwise.
+    /var/log/nginx/error.log: Any Nginx errors will be recorded in this log.
